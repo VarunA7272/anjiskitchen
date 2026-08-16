@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Anji's Kitchen — Swaad Apne Ghar Jaisa | Luxury Homemade Vegetarian Cloud Kitchen, Jabalpur</title>
+<meta name="description" content="Anji's Kitchen — a luxury homemade vegetarian cloud kitchen in Jabalpur. Handcrafted breakfast, signature specials, and desserts, cooked with love and delivered fresh. Free delivery within 2km." />
+<meta name="theme-color" content="#3E2A20" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Manrope:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+<script>
+  // Content is visible by default (see CSS). This class is only added once we
+  // confirm the page is running with working JS, so animated elements can be
+  // hidden-then-revealed. If this script or the animation libraries below
+  // fail to load (offline, blocked CDN, in-app browser, etc.) the page still
+  // shows everything, fully readable, with no animation.
+  document.documentElement.classList.add('js-anim');
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.13/lenis.min.js"></script>
+
+<style>
+:root{
+  --cream:#F3ECDD;
+  --cream-2:#EAE0C9;
+  --cocoa:#2E1F17;
+  --cocoa-2:#4A3225;
+  --terracotta:#C1622D;
+  --terracotta-2:#E08248;
+  --sage:#7C8A63;
+  --sage-2:#98A87D;
+  --gold:#C9A24B;
+  --gold-2:#E7C877;
+  --ink:#241611;
+  --paper:#FBF6EA;
+  --serif:'Cormorant Garamond', serif;
+  --sans:'Manrope', sans-serif;
+  --ui:'DM Sans', sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:auto;}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--sans);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  cursor:default;
+}
+::selection{ background:var(--terracotta); color:var(--paper); }
+
+img,canvas,svg{display:block; max-width:100%;}
+
+/* grain overlay */
+.grain{
+  position:fixed; inset:0; z-index:999; pointer-events:none;
+  opacity:.05; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a{color:inherit; text-decoration:none;}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:500; letter-spacing:.01em;}
+.eyebrow{
+  font-family:var(--ui); text-transform:uppercase; letter-spacing:.28em;
+  font-size:11px; color:var(--terracotta); font-weight:700;
+}
+.section{ position:relative; width:100%; }
+.wrap{ max-width:1240px; margin:0 auto; padding:0 6vw; }
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 5vw;
+  mix-blend-mode:difference;
+  color:#fff;
+  transition:padding .4s ease;
+}
+.nav.scrolled{ padding:14px 5vw; }
+.nav .logo{ font-family:var(--serif); font-size:22px; letter-spacing:.03em; }
+.nav .links{ display:flex; gap:34px; font-family:var(--ui); font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+.nav .links a{ opacity:.85; transition:opacity .3s; }
+.nav .links a:hover{ opacity:1; }
+.nav .cta-wa{
+  border:1px solid rgba(255,255,255,.6); border-radius:100px;
+  padding:9px 18px; font-family:var(--ui); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+}
+@media(max-width:820px){ .nav .links{ display:none; } }
+
+/* progress bar */
+.progress{
+  position:fixed; top:0; left:0; height:2px; background:var(--gold);
+  z-index:250; width:0%;
+}
+
+/* ================= HERO ================= */
+.hero{
+  height:100vh; position:relative; overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 50% 12%, #6b4a30 0%, transparent 55%),
+    linear-gradient(180deg, #B87A45 0%, #7C4E2C 28%, #402A1C 62%, #241610 100%);
+}
+.hero-sky{
+  position:absolute; inset:0;
+  background:radial-gradient(60% 40% at 50% 8%, rgba(255,214,150,.55), transparent 70%);
+  animation:sunPulse 8s ease-in-out infinite;
+}
+@keyframes sunPulse{ 0%,100%{opacity:.7} 50%{opacity:1} }
+
+#dustCanvas{ position:absolute; inset:0; z-index:3; opacity:.55; }
+
+.hero-table{
+  position:absolute; left:50%; bottom:-4%; width:130%; max-width:1400px;
+  transform:translate(-50%, 60px);
+  z-index:4;
+}
+.hero-table svg{ width:100%; height:auto; display:block; }
+
+.hero-content{
+  position:relative; z-index:6; height:100%;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+  text-align:center; padding-top:16vh;
+}
+.hero-eyebrow{
+  color:var(--gold-2); font-family:var(--ui); letter-spacing:.35em; text-transform:uppercase;
+  font-size:11px; margin-bottom:22px;
+}
+.hero-title{
+  font-family:var(--serif); color:var(--paper); font-weight:500;
+  font-size:clamp(40px, 7vw, 92px); line-height:1.05;
+  text-shadow:0 10px 40px rgba(0,0,0,.35);
+}
+.hero-title em{ font-style:italic; color:var(--gold-2); }
+.hero-sub{
+  margin-top:22px; color:rgba(255,244,225,.82); font-family:var(--sans); font-weight:300;
+  font-size:16px; max-width:440px;
+}
+.scroll-hint{
+  position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
+  z-index:6; color:rgba(255,255,255,.7); font-family:var(--ui); font-size:10px;
+  letter-spacing:.3em; text-transform:uppercase; display:flex; flex-direction:column; align-items:center; gap:10px;
+}
+/* animated-only hidden states: only apply once js-anim class confirms scripts run */
+html.js-anim .hero-eyebrow,
+html.js-anim .hero-title,
+html.js-anim .hero-sub,
+html.js-anim .scroll-hint{ opacity:0; }
+.scroll-hint .line{ width:1px; height:40px; background:linear-gradient(#fff, transparent); animation:hintMove 2.2s ease-in-out infinite; }
+@keyframes hintMove{ 0%{ transform:scaleY(0); transform-origin:top;} 50%{transform:scaleY(1); transform-origin:top;} 51%{transform-origin:bottom;} 100%{transform:scaleY(0); transform-origin:bottom;} }
+
+.logo-engrave{
+  position:absolute; z-index:5; left:50%; top:31%; transform:translate(-50%,-50%);
+  width:150px;
+}
+
+/* steaming bowl */
+.bowl-wrap{
+  position:absolute; z-index:5; left:50%; bottom:16%; transform:translate(-50%, 0) scale(1);
+  width:300px;
+}
+html.js-anim .logo-engrave{ opacity:0; transform:translate(-50%,-50%) scale(.7); }
+html.js-anim .bowl-wrap{ opacity:0; transform:translate(-50%, -40px) scale(.85); }
+.steam{ position:absolute; bottom:92%; left:50%; width:6px; height:120px; filter:blur(6px); }
+.steam span{
+  position:absolute; bottom:0; width:100%; height:100%;
+  background:linear-gradient(to top, rgba(255,255,255,.55), transparent 75%);
+  border-radius:50%;
+  animation:steamRise 3.2s ease-in infinite;
+  transform-origin:bottom center;
+}
+.steam span:nth-child(2){ animation-delay:1s; left:14px; }
+.steam span:nth-child(3){ animation-delay:2s; left:-12px; }
+@keyframes steamRise{
+  0%{ transform:translateY(0) scaleX(1) translateX(0); opacity:0; }
+  15%{ opacity:.8; }
+  100%{ transform:translateY(-140px) scaleX(2.4) translateX(20px); opacity:0; }
+}
+
+.crumb{ position:absolute; border-radius:50%; opacity:0; }
+
+/* ================= STORY ================= */
+.story{
+  background:var(--paper);
+  padding:14vh 0 16vh;
+}
+.story-grid{
+  display:grid; grid-template-columns:.9fr 1.1fr; gap:8vw; align-items:center;
+}
+@media(max-width:900px){ .story-grid{ grid-template-columns:1fr; gap:60px; } }
+.diary{
+  position:relative; aspect-ratio:4/5; background:
+    repeating-linear-gradient(180deg, transparent 0 38px, rgba(46,31,23,.08) 38px 39px),
+    #FBF3E1;
+  border-radius:2px;
+  box-shadow:0 30px 70px -30px rgba(46,31,23,.45), 0 0 0 1px rgba(46,31,23,.06);
+  padding:52px 40px;
+  transform:rotate(-2deg);
+}
+.diary::before{
+  content:''; position:absolute; left:34px; top:0; bottom:0; width:1px; background:rgba(193,98,45,.35);
+}
+.diary h3{ font-size:30px; color:var(--terracotta); margin-bottom:18px; }
+.diary p{ font-family:var(--serif); font-style:italic; font-size:19px; line-height:1.65; color:var(--cocoa-2); }
+.diary .stamp{
+  position:absolute; right:30px; bottom:30px; width:70px; height:70px; border-radius:50%;
+  border:2px dashed var(--sage); display:flex; align-items:center; justify-content:center;
+  transform:rotate(12deg); font-family:var(--ui); font-size:9px; letter-spacing:.1em; text-align:center;
+  color:var(--sage); text-transform:uppercase;
+}
+.story-text .eyebrow{ margin-bottom:20px; }
+.story-text h2{ font-size:clamp(30px,4vw,50px); color:var(--ink); line-height:1.15; margin-bottom:26px; }
+.story-text p{ font-size:17px; line-height:1.85; color:#5a4a3d; font-weight:300; margin-bottom:18px; max-width:520px; }
+.story-text .sign{ font-family:var(--serif); font-style:italic; font-size:26px; color:var(--terracotta); margin-top:20px; }
+
+/* ================= MORNING KITCHEN ================= */
+.kitchen{
+  background:linear-gradient(180deg, var(--cocoa) 0%, #1c110b 100%);
+  color:var(--paper); padding:16vh 0;
+  position:relative; overflow:hidden;
+}
+.kitchen::before{
+  content:''; position:absolute; inset:0; opacity:.06; pointer-events:none;
+  background-image:repeating-linear-gradient(90deg, #fff 0 2px, transparent 2px 90px);
+}
+.kitchen-head{ text-align:center; margin-bottom:9vh; }
+.kitchen-head h2{ font-size:clamp(32px,4.4vw,54px); color:var(--paper); }
+.kitchen-head p{ color:rgba(243,236,221,.6); max-width:520px; margin:16px auto 0; font-weight:300; }
+
+.process-row{ display:flex; gap:28px; overflow-x:auto; padding:10px 0 26px; scrollbar-width:none; }
+.process-row::-webkit-scrollbar{ display:none; }
+.pcard{
+  flex:0 0 240px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08);
+  border-radius:6px; padding:30px 24px; position:relative; overflow:hidden;
+}
+.pcard .idx{ font-family:var(--serif); font-size:44px; color:var(--gold); opacity:.5; }
+.pcard h4{ font-size:22px; color:var(--paper); margin:14px 0 8px; }
+.pcard p{ font-size:13.5px; color:rgba(243,236,221,.55); line-height:1.6; }
+.pcard .flame{
+  position:absolute; right:16px; bottom:16px; width:34px; height:34px; opacity:.7;
+}
+
+/* ================= SIGNATURE DISHES ================= */
+.dishes{
+  background:var(--cream); padding:16vh 0;
+}
+.dish-head{ text-align:center; margin-bottom:10vh; }
+.dish-head h2{ font-size:clamp(32px,4.4vw,56px); }
+.dish-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
+@media(max-width:980px){ .dish-grid{ grid-template-columns:repeat(2,1fr);} }
+@media(max-width:620px){ .dish-grid{ grid-template-columns:1fr;} }
+
+.dish-card{
+  position:relative; border-radius:10px; overflow:hidden; height:420px;
+  background:var(--cocoa-2);
+  perspective:1000px;
+}
+.dish-stage{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.dish-card:hover .dish-stage{ transform:scale(1.06) rotate(-1deg); }
+.dish-plate{ width:190px; height:190px; }
+.dish-info{
+  position:absolute; left:0; right:0; bottom:0; padding:26px 26px 24px;
+  background:linear-gradient(0deg, rgba(20,12,8,.92) 10%, rgba(20,12,8,0) 100%);
+  color:var(--paper);
+}
+.dish-info .tag{ font-family:var(--ui); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold-2); }
+.dish-info h3{ font-size:26px; margin-top:6px; }
+.dish-info p{ font-size:12.5px; color:rgba(243,236,221,.65); margin-top:6px; max-width:280px; }
+.dish-price{ position:absolute; top:20px; right:20px; font-family:var(--ui); font-size:12px; color:var(--paper); background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); padding:6px 12px; border-radius:100px; }
+
+/* ================= MADE WITH LOVE / PROCESS JOURNEY ================= */
+.journey{ background:var(--sage); background:linear-gradient(180deg,#75835f,#5d6a49); padding:16vh 0; color:var(--paper); position:relative; }
+.journey-head{ text-align:center; margin-bottom:10vh; }
+.journey-head h2{ color:var(--paper); font-size:clamp(30px,4.2vw,52px); }
+.journey-head p{ color:rgba(243,236,221,.75); max-width:520px; margin:14px auto 0; font-weight:300; }
+.journey-track{ position:relative; }
+.journey-line{
+  position:absolute; top:34px; left:6%; right:6%; height:1px; background:rgba(255,255,255,.25);
+}
+.journey-line .fill{ position:absolute; top:0; left:0; height:100%; width:0%; background:var(--gold-2); }
+.jsteps{ display:grid; grid-template-columns:repeat(6,1fr); gap:16px; position:relative; }
+@media(max-width:900px){ .jsteps{ grid-template-columns:repeat(3,1fr); row-gap:50px;} }
+@media(max-width:520px){ .jsteps{ grid-template-columns:repeat(2,1fr);} }
+.jstep{ text-align:center; opacity:.35; transition:opacity .4s; }
+.jstep.active{ opacity:1; }
+.jstep .dot{
+  width:16px; height:16px; border-radius:50%; background:var(--cream); margin:0 auto 18px;
+  box-shadow:0 0 0 6px rgba(243,236,221,.12);
+}
+.jstep.active .dot{ background:var(--gold-2); box-shadow:0 0 0 8px rgba(231,200,119,.22); }
+.jstep h5{ font-family:var(--serif); font-size:20px; margin-bottom:6px; }
+.jstep p{ font-size:11.5px; color:rgba(243,236,221,.65); }
+
+/* ================= TESTIMONIALS ================= */
+.love{ background:var(--paper); padding:16vh 0; }
+.love-head{ text-align:center; margin-bottom:6vh; }
+.love-head h2{ font-size:clamp(30px,4.2vw,52px); }
+
+.stat-row{ display:flex; justify-content:center; gap:60px; flex-wrap:wrap; margin:6vh 0 9vh; }
+.stat{ text-align:center; }
+.stat .num{ font-family:var(--serif); font-size:44px; color:var(--terracotta); }
+.stat .lbl{ font-family:var(--ui); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#7a6a5b; margin-top:6px; }
+
+.wa-grid{ column-count:3; column-gap:26px; }
+@media(max-width:940px){ .wa-grid{ column-count:2; } }
+@media(max-width:600px){ .wa-grid{ column-count:1; } }
+.wa-card{
+  break-inside:avoid; margin-bottom:26px; background:#E9FBE0; border-radius:12px 12px 12px 2px;
+  padding:18px 18px 14px; box-shadow:0 18px 40px -22px rgba(46,31,23,.35);
+  position:relative; border:1px solid #d3ecc2;
+}
+.wa-card .who{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.wa-avatar{
+  width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif); color:#fff; font-size:15px; flex:0 0 auto;
+}
+.wa-card .name{ font-family:var(--ui); font-size:13px; font-weight:700; color:#2b2b2b; }
+.wa-card .time{ font-size:10px; color:#8a8a8a; }
+.wa-card .msg{ font-size:14px; line-height:1.55; color:#2b2b2b; }
+.wa-card .ticks{ text-align:right; font-size:11px; color:#4FC3F7; margin-top:8px; }
+
+/* ================= INSTAGRAM ================= */
+.insta{ background:var(--cocoa); padding:16vh 0; color:var(--paper); }
+.insta-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:6vh; flex-wrap:wrap; gap:20px; }
+.insta-head h2{ color:var(--paper); font-size:clamp(28px,4vw,46px); }
+.insta-head a{ font-family:var(--ui); font-size:12px; letter-spacing:.15em; text-transform:uppercase; color:var(--gold-2); border-bottom:1px solid var(--gold-2); padding-bottom:4px; }
+.insta-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+@media(max-width:900px){ .insta-grid{ grid-template-columns:repeat(2,1fr);} }
+.insta-tile{
+  aspect-ratio:1/1.1; border-radius:8px; overflow:hidden; position:relative;
+  transform:rotate(0deg); transition:transform .5s ease, box-shadow .5s ease;
+}
+.insta-tile:hover{ transform:rotate(-2deg) scale(1.03); box-shadow:0 22px 50px -18px rgba(0,0,0,.6); z-index:2; }
+.insta-tile .fill{ position:absolute; inset:0; }
+.insta-tile .ov{
+  position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.65), transparent 55%);
+  display:flex; align-items:flex-end; padding:14px; opacity:0; transition:opacity .35s;
+}
+.insta-tile:hover .ov{ opacity:1; }
+.insta-tile .ov span{ font-family:var(--ui); font-size:11px; letter-spacing:.06em; }
+
+/* ================= DELIVERY MAP ================= */
+.delivery{ background:var(--cream-2); padding:16vh 0; }
+.delivery-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8vw; align-items:center; }
+@media(max-width:900px){ .delivery-grid{ grid-template-columns:1fr; gap:60px; } }
+.delivery-text h2{ font-size:clamp(30px,4vw,48px); margin-bottom:22px; }
+.delivery-text p{ font-size:16px; line-height:1.8; color:#5a4a3d; font-weight:300; margin-bottom:26px; max-width:460px; }
+.dl-list{ display:flex; flex-direction:column; gap:16px; }
+.dl-item{ display:flex; gap:16px; align-items:flex-start; }
+.dl-dot{ width:8px; height:8px; border-radius:50%; background:var(--terracotta); margin-top:8px; flex:0 0 auto; }
+.dl-item h5{ font-family:var(--ui); font-size:14px; font-weight:700; margin-bottom:2px; }
+.dl-item p{ font-size:13px; color:#7a6a5b; margin:0; }
+
+.map-box{ position:relative; aspect-ratio:1/1; border-radius:16px; overflow:hidden; background:#EFE6D2;
+  box-shadow:0 30px 70px -30px rgba(46,31,23,.4); }
+.map-box svg{ width:100%; height:100%; }
+.radius-ring{ animation:ringPulse 3.4s ease-in-out infinite; transform-origin:center; }
+@keyframes ringPulse{ 0%,100%{ opacity:.5; } 50%{ opacity:1; } }
+
+/* ================= ORDER ================= */
+.order{
+  background:linear-gradient(180deg,#241610,#120b07);
+  color:var(--paper); padding:18vh 0 14vh; text-align:center; position:relative; overflow:hidden;
+}
+.order-eyebrow{ margin-bottom:20px; justify-content:center; display:flex; }
+.order h2{ font-size:clamp(34px,5.4vw,72px); max-width:820px; margin:0 auto 20px; }
+.order p.sub{ color:rgba(243,236,221,.6); font-weight:300; max-width:460px; margin:0 auto 52px; }
+
+.order-buttons{ display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+.btn{
+  font-family:var(--ui); font-size:13px; letter-spacing:.1em; text-transform:uppercase;
+  padding:18px 34px; border-radius:100px; display:inline-flex; align-items:center; gap:10px;
+  position:relative; overflow:hidden; transition:transform .35s ease, box-shadow .35s ease;
+}
+.btn:hover{ transform:translateY(-3px); }
+.btn-gold{ background:linear-gradient(135deg,var(--gold-2),var(--gold)); color:#2c1c0d; box-shadow:0 14px 40px -14px rgba(201,162,75,.7); }
+.btn-wa{ background:#25D366; color:#0b3b1f; box-shadow:0 14px 40px -14px rgba(37,211,102,.6); }
+.btn-outline{ border:1px solid rgba(255,255,255,.35); color:var(--paper); }
+.btn-outline:hover{ border-color:var(--gold-2); color:var(--gold-2); }
+
+.order-note{ margin-top:44px; font-size:12px; color:rgba(243,236,221,.45); letter-spacing:.04em; }
+
+/* packing animation */
+.pack-anim{ position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(20,12,8,.86); backdrop-filter:blur(6px); }
+.pack-anim.show{ display:flex; }
+.pack-box{ text-align:center; color:var(--paper); }
+.pack-box svg{ width:160px; margin:0 auto 20px; }
+.pack-box h4{ font-family:var(--serif); font-size:26px; }
+.pack-box p{ font-size:13px; color:rgba(243,236,221,.6); margin-top:8px; }
+
+/* ================= FOOTER ================= */
+footer{ background:var(--ink); color:rgba(243,236,221,.55); padding:80px 0 30px; }
+.foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:60px; border-bottom:1px solid rgba(255,255,255,.08); }
+@media(max-width:800px){ .foot-grid{ grid-template-columns:1fr 1fr; row-gap:40px; } }
+.foot-logo{ font-family:var(--serif); font-size:26px; color:var(--paper); margin-bottom:14px; }
+.foot-grid h6{ font-family:var(--ui); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-2); margin-bottom:16px; }
+.foot-grid a, .foot-grid p{ display:block; font-size:13px; margin-bottom:10px; color:rgba(243,236,221,.6); }
+.foot-bottom{ padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:11px; }
+
+/* utility reveal classes used by GSAP: visible by default so the page
+   never depends on JS to be readable. Only pre-hidden once js-anim
+   confirms the animation scripts are actually running. */
+.reveal{ opacity:1; transform:none; }
+html.js-anim .reveal{ opacity:0; transform:translateY(40px); }
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+
+/* focus states */
+a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+/* whatsapp float */
+.wa-float{
+  position:fixed; right:26px; bottom:26px; z-index:180; width:58px; height:58px; border-radius:50%;
+  background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 14px 34px -10px rgba(0,0,0,.5);
+}
+.wa-float svg{ width:28px; height:28px; }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="progress" id="progressBar"></div>
+
+<nav class="nav" id="nav">
+  <div class="logo">Anji's Kitchen</div>
+  <div class="links">
+    <a href="#story">Story</a>
+    <a href="#dishes">Signatures</a>
+    <a href="#love">Reviews</a>
+    <a href="#delivery">Delivery</a>
+  </div>
+  <a class="cta-wa" href="https://wa.me/917848827245" target="_blank" rel="noopener">WhatsApp Order</a>
+</nav>
+
+<a class="wa-float" href="https://wa.me/917848827245" target="_blank" rel="noopener" aria-label="Order on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="#fff"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.4.7 4.6 1.9 6.6L3 29l7-1.8c1.9 1 4 1.6 6.3 1.6 7 0 12.7-5.6 12.7-12.6C29 8.6 23.3 3 16 3zm0 22.9c-2 0-3.9-.5-5.6-1.5l-.4-.2-4.2 1.1 1.1-4-.3-.4a10.2 10.2 0 0 1-1.7-5.7C4.9 9.6 9.9 5 16 5c5.9 0 10.7 4.8 10.7 10.6C26.7 21.1 22 25.9 16 25.9zm5.9-7.9c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.1-.2.3-.8 1.1-1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6-.1-.2-.7-1.8-1-2.4-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.2 3.4 5.3 4.7.7.3 1.3.5 1.8.6.7.2 1.4.2 1.9.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.3z"/></svg>
+</a>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="hero-sky"></div>
+  <canvas id="dustCanvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow" id="heroEyebrow">Homemade · Vegetarian · Jabalpur</div>
+    <h1 class="hero-title" id="heroTitle">Swaad Apne<br><em>Ghar Jaisa</em></h1>
+    <p class="hero-sub" id="heroSub">A cloud kitchen born in a real home kitchen — where every dish still carries the smell of someone's mother cooking on a slow flame.</p>
+  </div>
+
+  <svg class="logo-engrave" id="logoEngrave" viewBox="0 0 200 200" fill="none">
+    <circle cx="100" cy="100" r="92" stroke="#E7C877" stroke-width="1.4" opacity="0.6"/>
+    <circle cx="100" cy="100" r="78" stroke="#E7C877" stroke-width="1" opacity="0.4"/>
+    <text x="100" y="92" text-anchor="middle" fill="#E7C877" font-family="Cormorant Garamond, serif" font-size="26" font-style="italic">Anji's</text>
+    <text x="100" y="122" text-anchor="middle" fill="#E7C877" font-family="Cormorant Garamond, serif" font-size="22" letter-spacing="4">KITCHEN</text>
+  </svg>
+
+  <div class="bowl-wrap" id="bowlWrap">
+    <div class="steam"><span></span><span></span><span></span></div>
+    <svg viewBox="0 0 300 220" width="300">
+      <ellipse cx="150" cy="196" rx="118" ry="14" fill="#000" opacity=".28"/>
+      <path d="M40 90 C40 150 90 190 150 190 C210 190 260 150 260 90 Z" fill="#EDE3CB"/>
+      <path d="M40 90 C40 150 90 190 150 190 C210 190 260 150 260 90 Z" fill="url(#bowlShade)"/>
+      <ellipse cx="150" cy="90" rx="110" ry="26" fill="#F6EFDD"/>
+      <ellipse cx="150" cy="88" rx="98" ry="20" fill="#E4B24A"/>
+      <ellipse cx="150" cy="88" rx="98" ry="20" fill="url(#pohaTex)"/>
+      <g id="coriander">
+        <circle cx="110" cy="80" r="3" fill="#5C7A3A"/>
+        <circle cx="176" cy="72" r="3" fill="#5C7A3A"/>
+        <circle cx="140" cy="94" r="3" fill="#6E8C48"/>
+        <circle cx="200" cy="88" r="3" fill="#5C7A3A"/>
+        <circle cx="90" cy="96" r="3" fill="#6E8C48"/>
+      </g>
+      <g id="lemon" transform="translate(205,74) rotate(0)" style="transform-origin:205px 74px;">
+        <circle r="13" fill="#E9C94A" stroke="#C9A24B" stroke-width="1.5"/>
+        <path d="M-8 0 L8 0 M0 -8 L0 8 M-6 -6 L6 6 M-6 6 L6 -6" stroke="#F7E9A5" stroke-width="1.2"/>
+      </g>
+      <ellipse cx="150" cy="82" rx="24" ry="10" fill="#FFF3C4" opacity=".85"/>
+      <defs>
+        <linearGradient id="bowlShade" x1="0" y1="90" x2="0" y2="190">
+          <stop offset="0" stop-color="#000" stop-opacity=".18"/>
+          <stop offset="1" stop-color="#000" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="pohaTex" cx="30%" cy="30%" r="80%">
+          <stop offset="0" stop-color="#F3CD6B"/>
+          <stop offset="1" stop-color="#D89A34"/>
+        </radialGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="hero-table" id="heroTable">
+    <svg viewBox="0 0 1440 260" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#6B4126"/>
+          <stop offset="1" stop-color="#2E1A0F"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="260" fill="url(#wood)"/>
+      <g opacity=".22" stroke="#1c0f07" stroke-width="1.5">
+        <path d="M0 40 Q 720 10 1440 40"/>
+        <path d="M0 90 Q 720 65 1440 90"/>
+        <path d="M0 150 Q 720 120 1440 150"/>
+        <path d="M0 210 Q 720 185 1440 210"/>
+      </g>
+      <rect width="1440" height="14" fill="#8a5a34"/>
+    </svg>
+  </div>
+
+  <div class="scroll-hint" id="scrollHint">
+    <span>Scroll to begin</span>
+    <span class="line"></span>
+  </div>
+</section>
+
+<!-- ================= STORY ================= -->
+<section class="story section" id="story">
+  <div class="wrap story-grid">
+    <div class="diary reveal">
+      <h3>1998, Napier Town</h3>
+      <p>"Amma used to say — a kitchen without the smell of tempering ghee isn't awake yet. I still cook by that rule."</p>
+      <div class="stamp">Est.<br>Family<br>Recipe</div>
+    </div>
+    <div class="story-text reveal">
+      <div class="eyebrow">Our Story</div>
+      <h2>It began on a two-burner stove, not a business plan.</h2>
+      <p>Anji's Kitchen started the way most real Indian food does — with one woman, one steel dabba, and a habit of cooking a little extra "just in case someone drops by." The someones kept dropping by. Then they started asking for tiffins. Then Jabalpur started asking.</p>
+      <p>Nothing here is built for a menu photoshoot. The dhokla is steamed the way it was steamed for birthday mornings. The shrikhand is hung and strained overnight, not rushed. We simply decided to let more people sit at the same table.</p>
+      <div class="sign">— Anjali, Anji's Kitchen</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MORNING KITCHEN ================= -->
+<section class="kitchen section" id="morning">
+  <div class="wrap">
+    <div class="kitchen-head reveal">
+      <div class="eyebrow" style="justify-content:center;display:flex;">The Morning Kitchen</div>
+      <h2>Before the first order, the stove is already lit.</h2>
+      <p>Every batch begins the same unhurried way — chopped by hand, tempered on real flame, plated the way it would be at home.</p>
+    </div>
+    <div class="process-row">
+      <div class="pcard reveal"><div class="idx">Po</div><h4>Poha</h4><p>Flattened rice, hand-washed thrice, tempered with mustard seed, curry leaf and a squeeze of fresh lemon.</p></div>
+      <div class="pcard reveal"><div class="idx">Up</div><h4>Upma</h4><p>Roasted rava, slow-cooked with ghee until it turns a shade darker — that's how you know it's right.</p></div>
+      <div class="pcard reveal"><div class="idx">Dh</div><h4>Dhokla</h4><p>Steamed till impossibly soft, tempered on top, never microwaved-soft — always steam-soft.</p></div>
+      <div class="pcard reveal"><div class="idx">Sw</div><h4>Sandwiches</h4><p>Stacked and pressed to order, so the first bite still has that just-off-the-tawa warmth.</p></div>
+      <div class="pcard reveal"><div class="idx">Ch</div><h4>Chutneys</h4><p>Ground fresh each morning in small batches — mint, coconut, garlic — never bottled, never stored.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SIGNATURE DISHES ================= -->
+<section class="dishes section" id="dishes">
+  <div class="wrap">
+    <div class="dish-head reveal">
+      <div class="eyebrow" style="justify-content:center;display:flex;">Signature Specials</div>
+      <h2>Five dishes we'd stake our name on.</h2>
+    </div>
+    <div class="dish-grid">
+
+      <div class="dish-card reveal">
+        <div class="dish-price">₹99</div>
+        <div class="dish-stage">
+          <svg class="dish-plate" viewBox="0 0 200 200"><circle cx="100" cy="130" r="60" fill="#7C4E2C"/><ellipse cx="100" cy="112" rx="58" ry="22" fill="#D98A3D"/><circle cx="80" cy="105" r="9" fill="#E8B15B"/><circle cx="120" cy="102" r="9" fill="#B84A2C"/><circle cx="100" cy="118" r="7" fill="#5C7A3A"/></svg>
+        </div>
+        <div class="dish-info"><div class="tag">Street Classic</div><h3>Dabeli</h3><p>Spiced potato, pomegranate, sev and roasted peanuts — layered, not tossed.</p></div>
+      </div>
+
+      <div class="dish-card reveal">
+        <div class="dish-price">₹129</div>
+        <div class="dish-stage">
+          <svg class="dish-plate" viewBox="0 0 200 200"><circle cx="100" cy="120" r="62" fill="#9C3D22"/><ellipse cx="100" cy="105" rx="52" ry="18" fill="#C9532B"/><rect x="90" y="80" width="20" height="14" rx="3" fill="#F3D97A"/></svg>
+        </div>
+        <div class="dish-info"><div class="tag">Bombay Style</div><h3>Pav Bhaji</h3><p>Slow-mashed on the tawa till the butter melts right into the masala.</p></div>
+      </div>
+
+      <div class="dish-card reveal">
+        <div class="dish-price">₹89</div>
+        <div class="dish-stage">
+          <svg class="dish-plate" viewBox="0 0 200 200">
+            <g id="dhoklaCubes">
+              <rect x="70" y="110" width="26" height="26" rx="3" fill="#F3D96A"/>
+              <rect x="100" y="118" width="26" height="26" rx="3" fill="#F0CB4E"/>
+              <rect x="86" y="86" width="26" height="26" rx="3" fill="#F6E28C"/>
+            </g>
+            <circle cx="99" cy="132" r="4" fill="#5C7A3A"/><circle cx="112" cy="98" r="4" fill="#C9532B"/>
+          </svg>
+        </div>
+        <div class="dish-info"><div class="tag">Gujarati Favourite</div><h3>Dhokla</h3><p>Feather-light, tempered with mustard and sesame, served with green chutney.</p></div>
+      </div>
+
+      <div class="dish-card reveal">
+        <div class="dish-price">₹79</div>
+        <div class="dish-stage">
+          <svg class="dish-plate" viewBox="0 0 200 200"><ellipse cx="100" cy="115" rx="55" ry="34" fill="#D9A24B"/><ellipse cx="100" cy="108" rx="55" ry="30" fill="#EBC06A"/><ellipse cx="100" cy="100" rx="30" ry="10" fill="#FBEBB0" opacity=".8"/></svg>
+        </div>
+        <div class="dish-info"><div class="tag">Fusion Bake</div><h3>Korean Bun</h3><p>Glossy, cheese-stuffed and lightly torched — our most requested weekend bake.</p></div>
+      </div>
+
+      <div class="dish-card reveal">
+        <div class="dish-price">₹119</div>
+        <div class="dish-stage">
+          <svg class="dish-plate" viewBox="0 0 200 200"><path d="M55 90 C55 140 75 165 100 165 C125 165 145 140 145 90 Z" fill="#F3E0A8"/><path d="M55 90 C55 140 75 165 100 165 C125 165 145 140 145 90 Z" fill="url(#shrikhandTex)"/><circle cx="90" cy="105" r="3" fill="#B84A2C"/><circle cx="110" cy="112" r="3" fill="#6E8C48"/><circle cx="100" cy="98" r="3" fill="#C9532B"/><defs><radialGradient id="shrikhandTex" cx="30%" cy="20%" r="80%"><stop offset="0" stop-color="#FFE9A0"/><stop offset="1" stop-color="#E9A23D"/></radialGradient></defs></svg>
+        </div>
+        <div class="dish-info"><div class="tag">Festive Dessert</div><h3>Mango Shrikhand</h3><p>Hung curd, alphonso pulp, saffron and pistachio, folded slow by hand.</p></div>
+      </div>
+
+      <div class="dish-card reveal" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--terracotta),#8a3f1e);">
+        <div style="text-align:center;color:#fff;padding:30px;">
+          <div class="eyebrow" style="color:#F6D9BE;">Today's Menu</div>
+          <h3 style="font-size:26px;margin:14px 0 18px;">See what's cooking today</h3>
+          <a href="https://wa.me/917848827245?text=Hi!%20Can%20I%20see%20today's%20menu%20at%20Anji's%20Kitchen%3F" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:rgba(255,255,255,.5);">View on WhatsApp</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= MADE WITH LOVE JOURNEY ================= -->
+<section class="journey section" id="journey">
+  <div class="wrap">
+    <div class="journey-head reveal">
+      <div class="eyebrow" style="color:#F6E7B5; justify-content:center; display:flex;">Made With Love</div>
+      <h2>From the sabzi mandi to your doorstep.</h2>
+      <p>No frozen shortcuts, no pre-made bases. Every order walks the same six steps, every single day.</p>
+    </div>
+    <div class="journey-track">
+      <div class="journey-line"><div class="fill" id="journeyFill"></div></div>
+      <div class="jsteps" id="jsteps">
+        <div class="jstep"><div class="dot"></div><h5>Sourced</h5><p>Fresh sabzi, daily mandi run</p></div>
+        <div class="jstep"><div class="dot"></div><h5>Washed</h5><p>Triple-rinsed, no shortcuts</p></div>
+        <div class="jstep"><div class="dot"></div><h5>Cut</h5><p>Hand-cut, right before cooking</p></div>
+        <div class="jstep"><div class="dot"></div><h5>Cooked</h5><p>Slow flame, real ghee &amp; oil</p></div>
+        <div class="jstep"><div class="dot"></div><h5>Packed</h5><p>Sealed hot, spill-proof boxes</p></div>
+        <div class="jstep"><div class="dot"></div><h5>Delivered</h5><p>To your door, still warm</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="love section" id="love">
+  <div class="wrap">
+    <div class="love-head reveal">
+      <div class="eyebrow" style="justify-content:center;display:flex;">Customer Love</div>
+      <h2>What Jabalpur is saying.</h2>
+    </div>
+
+    <div class="stat-row reveal">
+      <div class="stat"><div class="num" data-count="1000">0</div><div class="lbl">⭐ Happy Customers</div></div>
+      <div class="stat"><div class="num" data-count="98" data-suffix="%">0</div><div class="lbl">❤️ Repeat Orders</div></div>
+      <div class="stat"><div class="num" data-count="6000" data-suffix="+">0</div><div class="lbl">🚚 Deliveries Done</div></div>
+      <div class="stat"><div class="num-static">Day One</div><div class="lbl">🏡 Homemade Since</div></div>
+    </div>
+
+    <div class="wa-grid">
+      <div class="wa-card reveal"><div class="who"><div class="wa-avatar" style="background:#C1622D;">R</div><div><div class="name">Ritika S.</div><div class="time">Napier Town</div></div></div><p class="msg">Ordered the dabeli for the first time today, tasted exactly like my nani used to make in Indore. Packaging bhi bahut neat tha 👌</p><div class="ticks">✓✓ 12:41 pm</div></div>
+
+      <div class="wa-card reveal"><div class="who"><div class="wa-avatar" style="background:#7C8A63;">A</div><div><div class="name">Amit K.</div><div class="time">Wright Town</div></div></div><p class="msg">Been ordering breakfast every Monday for a month now. Poha is always fresh, never soggy. Highly recommend 🙏</p><div class="ticks">✓✓ 8:14 am</div></div>
+
+      <div class="wa-card reveal"><div class="who"><div class="wa-avatar" style="background:#C9A24B;">P</div><div><div class="name">Priya M.</div><div class="time">Ranjhi</div></div></div><p class="msg">Mango shrikhand for my mom's birthday and everyone at the table asked where it was from 😍 will order again for sure</p><div class="ticks">✓✓ 7:52 pm</div></div>
+
+      <div class="wa-card reveal"><div class="who"><div class="wa-avatar" style="background:#4A3225;">S</div><div><div class="name">Sanjay T.</div><div class="time">Adhartal</div></div></div><p class="msg">Genuinely feels homemade, not restaurant-style oily. Dhokla was soft soft. Free delivery bhi mila 2km ke andar 👍</p><div class="ticks">✓✓ 1:05 pm</div></div>
+
+      <div class="wa-card reveal"><div class="who"><div class="wa-avatar" style="background:#C1622D;">N</div><div><div class="name">Nidhi J.</div><div class="time">Garha</div></div></div><p class="msg">Korean bun was so good my kids fought over the last piece. Ordering weekly now honestly.</p><div class="ticks">✓✓ 6:30 pm</div></div>
+
+      <div class="wa-card reveal"><div class="who"><div class="wa-avatar" style="background:#7C8A63;">V</div><div><div class="name">Vikram D.</div><div class="time">Vijay Nagar</div></div></div><p class="msg">Pav bhaji was on point, butter loaded just the right amount. WhatsApp se order karna bhi bahut easy tha.</p><div class="ticks">✓✓ 9:20 pm</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSTAGRAM ================= -->
+<section class="insta section" id="gallery">
+  <div class="wrap">
+    <div class="insta-head reveal">
+      <h2>Fresh off the tawa, straight to the feed.</h2>
+      <a href="#" target="_blank" rel="noopener">@anjiskitchen →</a>
+    </div>
+    <div class="insta-grid">
+      <div class="insta-tile reveal"><svg class="fill" viewBox="0 0 200 220"><rect width="200" height="220" fill="#B8571E"/><circle cx="100" cy="100" r="55" fill="#E8B15B"/></svg><div class="ov"><span>Today's Poha 🍋</span></div></div>
+      <div class="insta-tile reveal"><svg class="fill" viewBox="0 0 200 220"><rect width="200" height="220" fill="#5C6E3E"/><circle cx="100" cy="100" r="55" fill="#F6E28C"/></svg><div class="ov"><span>Dhokla batch #204</span></div></div>
+      <div class="insta-tile reveal"><svg class="fill" viewBox="0 0 200 220"><rect width="200" height="220" fill="#8A3F1E"/><circle cx="100" cy="100" r="55" fill="#D98A3D"/></svg><div class="ov"><span>Pav Bhaji Fridays</span></div></div>
+      <div class="insta-tile reveal"><svg class="fill" viewBox="0 0 200 220"><rect width="200" height="220" fill="#C9A24B"/><circle cx="100" cy="100" r="55" fill="#FFF3C4"/></svg><div class="ov"><span>Shrikhand Sunday 🥭</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DELIVERY ================= -->
+<section class="delivery section" id="delivery">
+  <div class="wrap delivery-grid">
+    <div class="delivery-text reveal">
+      <div class="eyebrow">Delivery &amp; Pickup</div>
+      <h2>Straight from our kitchen to yours.</h2>
+      <p>We keep delivery small and honest — because food this fresh shouldn't travel far or wait long.</p>
+      <div class="dl-list">
+        <div class="dl-item"><div class="dl-dot"></div><div><h5>Free delivery within 2 km</h5><p>No minimum order, no hidden charge.</p></div></div>
+        <div class="dl-item"><div class="dl-dot"></div><div><h5>Self pickup available</h5><p>Order ahead on WhatsApp and skip the wait.</p></div></div>
+        <div class="dl-item"><div class="dl-dot"></div><div><h5>Beyond 2 km</h5><p>Delivered via Rapido — charges as per the app, paid directly to the rider.</p></div></div>
+      </div>
+    </div>
+    <div class="map-box reveal">
+      <svg viewBox="0 0 400 400">
+        <rect width="400" height="400" fill="#EFE6D2"/>
+        <g stroke="#D9CBA8" stroke-width="6">
+          <path d="M0 120 H400" /><path d="M0 260 H400" /><path d="M120 0 V400" /><path d="M280 0 V400" />
+        </g>
+        <circle class="radius-ring" cx="200" cy="200" r="70" fill="none" stroke="#C1622D" stroke-width="2" stroke-dasharray="6 6"/>
+        <circle cx="200" cy="200" r="10" fill="#C1622D"/>
+        <text x="200" y="182" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7a5a3d">Anji's Kitchen</text>
+        <circle cx="200" cy="140" r="5" fill="#4A3225" id="scooter">
+        </circle>
+        <text x="130" y="330" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7a5a3d">Free zone · 2km</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ORDER ================= -->
+<section class="order section" id="orderNow">
+  <div class="wrap">
+    <div class="order-eyebrow eyebrow reveal">Ready When You Are</div>
+    <h2 class="reveal">Let's get something warm to your table.</h2>
+    <p class="sub reveal">Order directly, or drop us a message on WhatsApp — we reply within minutes during kitchen hours.</p>
+    <div class="order-buttons reveal">
+      <a href="https://wa.me/917848827245?text=Hi%20Anji's%20Kitchen%2C%20I'd%20like%20to%20place%20an%20order!" target="_blank" rel="noopener" class="btn btn-wa" id="orderBtn">Order on WhatsApp</a>
+      <a href="https://wa.me/917848827245?text=Hi!%20Can%20I%20see%20today's%20menu%3F" target="_blank" rel="noopener" class="btn btn-gold">View Today's Menu</a>
+      <a href="tel:+917848827245" class="btn btn-outline">Call to Order</a>
+    </div>
+    <p class="order-note reveal">7848827245 · Open daily 7:30 AM – 9:30 PM · Jabalpur, Madhya Pradesh</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">Anji's Kitchen</div>
+        <p>A luxury homemade vegetarian cloud kitchen in Jabalpur — cooked slow, packed with care, delivered warm.</p>
+      </div>
+      <div>
+        <h6>Explore</h6>
+        <a href="#story">Our Story</a>
+        <a href="#dishes">Signatures</a>
+        <a href="#love">Reviews</a>
+        <a href="#gallery">Gallery</a>
+      </div>
+      <div>
+        <h6>Order</h6>
+        <a href="https://wa.me/917848827245" target="_blank" rel="noopener">WhatsApp: 7848827245</a>
+        <a href="tel:+917848827245">Call to Order</a>
+        <a href="#delivery">Delivery Info</a>
+      </div>
+      <div>
+        <h6>Kitchen Hours</h6>
+        <p>Mon – Sun</p>
+        <p>7:30 AM – 9:30 PM</p>
+        <p>Jabalpur, Madhya Pradesh</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Anji's Kitchen. Made with love, not a franchise kit.</span>
+      <span>Homemade · Vegetarian · Since Day One</span>
+    </div>
+  </div>
+</footer>
+
+<div class="pack-anim" id="packAnim">
+  <div class="pack-box">
+    <svg viewBox="0 0 160 160" fill="none">
+      <rect x="30" y="60" width="100" height="80" rx="4" fill="#C1622D" id="boxBody"/>
+      <path d="M30 60 L80 30 L130 60" stroke="#8a3f1e" stroke-width="4" fill="#E08248" id="boxLid"/>
+      <rect x="70" y="60" width="20" height="80" fill="#8a3f1e" opacity=".5"/>
+    </svg>
+    <h4>Packed with love</h4>
+    <p>Sealed hot and sent your way 🚀</p>
+  </div>
+</div>
+
+<script>
+// Safety net: if GSAP didn't load at all (blocked CDN, offline, in-app
+// browser restrictions) drop the hidden-state class immediately so every
+// .reveal / hero element falls back to its default visible CSS state.
+if (typeof gsap === 'undefined') {
+  document.documentElement.classList.remove('js-anim');
+}
+// Second safety net: even if GSAP loaded, force everything visible after
+// 4s no matter what, in case a ScrollTrigger/trigger config never fires
+// on a given device (e.g. unusual viewport / very fast scroll on load).
+setTimeout(function(){
+  document.documentElement.classList.remove('js-anim');
+}, 4000);
+
+try{
+
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---------- Lenis smooth scroll (graceful fallback) ---------- */
+try{
+  if (window.Lenis && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time)=>{ lenis.raf(time*1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+}catch(e){ console.warn('Lenis unavailable, using native scroll'); }
+
+/* ---------- nav + progress ---------- */
+const nav = document.getElementById('nav');
+const progressBar = document.getElementById('progressBar');
+ScrollTrigger.create({
+  start:0, end:'max', onUpdate:(self)=>{
+    progressBar.style.width = (self.progress*100)+'%';
+    if(window.scrollY>40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+  }
+});
+
+/* ---------- hero timeline ---------- */
+const heroTl = gsap.timeline({ delay:.2 });
+heroTl.to('#heroEyebrow', {opacity:1, y:0, duration:.8, ease:'power2.out'})
+  .to('#heroTable', {y:0, duration:1.2, ease:'power3.out'}, '-=.4')
+  .to('#logoEngrave', {opacity:1, scale:1, duration:1, ease:'power2.out'}, '-=.6')
+  .to('#heroTitle', {opacity:1, y:0, duration:1, ease:'power3.out'}, '-=.6')
+  .to('#heroSub', {opacity:1, duration:1}, '-=.5')
+  .to('#bowlWrap', {opacity:1, y:0, scale:1, duration:1, ease:'back.out(1.4)'}, '-=.5')
+  .to('#scrollHint', {opacity:1, duration:.8}, '-=.3');
+
+gsap.set('#heroEyebrow', {y:14});
+gsap.set('#heroTitle', {y:30});
+gsap.set('#logoEngrave', {scale:.7});
+gsap.set('#bowlWrap', {y:-40, scale:.85});
+
+/* hero parallax + lemon rotate + fade on scroll */
+gsap.to('#lemon', { rotation:340, transformOrigin:'50% 50%', scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:true } });
+gsap.to('#heroTable', { y:80, scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:true } });
+gsap.to('.hero-content, .bowl-wrap, .logo-engrave', { opacity:0, y:-60, scrollTrigger:{ trigger:'.hero', start:'20% top', end:'bottom top', scrub:true } });
+
+/* dhokla cubes float-in when dishes section enters */
+gsap.set('#dhoklaCubes rect', { y:-40, opacity:0 });
+gsap.to('#dhoklaCubes rect', {
+  y:0, opacity:1, stagger:.15, duration:.8, ease:'bounce.out',
+  scrollTrigger:{ trigger:'#dishes', start:'top 60%' }
+});
+
+/* ---------- generic reveal ---------- */
+document.querySelectorAll('.reveal').forEach((el)=>{
+  gsap.to(el, {
+    opacity:1, y:0, duration:1, ease:'power3.out',
+    scrollTrigger:{ trigger:el, start:'top 85%' }
+  });
+});
+
+/* ---------- journey progress fill + active steps ---------- */
+const jsteps = document.querySelectorAll('.jstep');
+ScrollTrigger.create({
+  trigger:'#journey', start:'top 60%', end:'bottom 60%',
+  onUpdate:(self)=>{
+    document.getElementById('journeyFill').style.width = (self.progress*100)+'%';
+    const activeCount = Math.floor(self.progress*jsteps.length)+ (self.progress>0?0:0);
+    jsteps.forEach((s,i)=>{ s.classList.toggle('active', i < Math.ceil(self.progress*jsteps.length)); });
+  }
+});
+
+/* ---------- counters ---------- */
+document.querySelectorAll('.num').forEach((el)=>{
+  const target = parseInt(el.getAttribute('data-count'),10);
+  const suffix = el.getAttribute('data-suffix')||'';
+  ScrollTrigger.create({
+    trigger: el, start:'top 90%', once:true,
+    onEnter:()=>{
+      let obj={val:0};
+      gsap.to(obj, { val:target, duration:1.8, ease:'power2.out', onUpdate:()=>{ el.textContent = Math.floor(obj.val)+suffix; } });
+    }
+  });
+});
+
+/* ---------- delivery scooter animation ---------- */
+gsap.to('#scooter', {
+  motionPath:{ path:[{x:0,y:0},{x:-40,y:20},{x:0,y:60}], curviness:1.5 },
+  duration:3, repeat:-1, ease:'sine.inOut'
+});
+
+/* ---------- order button -> packing animation ---------- */
+const packAnim = document.getElementById('packAnim');
+document.getElementById('orderBtn').addEventListener('click', ()=>{
+  packAnim.classList.add('show');
+  gsap.fromTo('#boxLid', {y:-10, rotate:0}, {y:0, rotate:0, duration:.5, ease:'bounce.out'});
+  setTimeout(()=>{ packAnim.classList.remove('show'); }, 1800);
+});
+
+/* ---------- dust / steam particle canvas (hero) ---------- */
+(function(){
+  const canvas = document.getElementById('dustCanvas');
+  const ctx = canvas.getContext('2d');
+  let w,h,particles=[];
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const count = reduced ? 0 : (window.innerWidth<700 ? 30 : 70);
+
+  function resize(){
+    w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+    h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for(let i=0;i<count;i++){
+    particles.push({
+      x:Math.random()*w, y:Math.random()*h,
+      r:Math.random()*1.6+0.4,
+      s:Math.random()*0.3+0.05,
+      o:Math.random()*0.5+0.1,
+      dx:(Math.random()-0.5)*0.15
+    });
+  }
+
+  function loop(){
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle = '#FFEBC2';
+    particles.forEach(p=>{
+      p.y -= p.s; p.x += p.dx;
+      if(p.y < -10){ p.y = h+10; p.x = Math.random()*w; }
+      ctx.globalAlpha = p.o;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    if(!reduced) requestAnimationFrame(loop);
+  }
+  if(count>0) loop();
+})();
+
+/* ---------- performance: pause heavy work when tab hidden ---------- */
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden){ gsap.globalTimeline.pause(); } else { gsap.globalTimeline.resume(); }
+});
+
+} catch(err){
+  // Any animation error: don't let it leave the page blank. Reveal everything.
+  console.warn('Animation setup failed, showing static page instead:', err);
+  document.documentElement.classList.remove('js-anim');
+}
+</script>
+
+</body>
+</html>
