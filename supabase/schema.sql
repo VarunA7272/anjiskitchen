@@ -1,9 +1,9 @@
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Anji's Kitchen — Supabase Database Schema
--- Run this in your Supabase SQL Editor
+-- Run this in your Supabase SQL Editor (https://supabase.com/dashboard)
 -- ═══════════════════════════════════════════════════════════════════════════
 
--- Enable UUID extension (usually already enabled)
+-- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ─── Categories Table ─────────────────────────────────────────────────────
@@ -55,31 +55,49 @@ CREATE INDEX IF NOT EXISTS idx_products_active ON products(is_active);
 CREATE INDEX IF NOT EXISTS idx_products_featured ON products(is_featured);
 CREATE INDEX IF NOT EXISTS idx_reviews_approved ON reviews(is_approved);
 
--- ─── Row Level Security (RLS) ─────────────────────────────────────────────
--- Enable RLS on all tables
+-- ─── Row Level Security (RLS) Policies ────────────────────────────────────
+-- Enable RLS
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
 
--- Categories: Public read, authenticated write
-CREATE POLICY "Public read categories" ON categories FOR SELECT USING (true);
-CREATE POLICY "Admin write categories" ON categories FOR ALL USING (auth.role() = 'authenticated');
+-- Drop old restrictive policies if they exist
+DROP POLICY IF EXISTS "Public read categories" ON categories;
+DROP POLICY IF EXISTS "Admin write categories" ON categories;
+DROP POLICY IF EXISTS "Allow all categories" ON categories;
 
--- Products: Public read active products, authenticated write all
-CREATE POLICY "Public read active products" ON products FOR SELECT USING (is_active = true);
-CREATE POLICY "Admin read all products" ON products FOR SELECT USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin write products" ON products FOR ALL USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Public read active products" ON products;
+DROP POLICY IF EXISTS "Admin read all products" ON products;
+DROP POLICY IF EXISTS "Admin write products" ON products;
+DROP POLICY IF EXISTS "Allow all products" ON products;
 
--- Reviews: Public read approved, public insert, authenticated manage all
-CREATE POLICY "Public read approved reviews" ON reviews FOR SELECT USING (is_approved = true);
-CREATE POLICY "Public submit reviews" ON reviews FOR INSERT WITH CHECK (true);
-CREATE POLICY "Admin manage reviews" ON reviews FOR ALL USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Public read approved reviews" ON reviews;
+DROP POLICY IF EXISTS "Public submit reviews" ON reviews;
+DROP POLICY IF EXISTS "Admin manage reviews" ON reviews;
+DROP POLICY IF EXISTS "Allow all reviews" ON reviews;
 
--- ─── Storage Bucket ───────────────────────────────────────────────────────
--- Run this in Supabase Dashboard > Storage:
--- Create a new public bucket named: product-images
--- OR run via SQL:
--- INSERT INTO storage.buckets (id, name, public) VALUES ('product-images', 'product-images', true);
+-- Allow full access to categories, products, and reviews
+CREATE POLICY "Allow all categories" ON categories FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all products" ON products FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all reviews" ON reviews FOR ALL USING (true) WITH CHECK (true);
+
+-- ─── Storage Bucket Setup ─────────────────────────────────────────────────
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('product-images', 'product-images', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Storage policies for product-images bucket
+CREATE POLICY "Public select product-images" ON storage.objects
+  FOR SELECT USING (bucket_id = 'product-images');
+
+CREATE POLICY "Public insert product-images" ON storage.objects
+  FOR INSERT WITH CHECK (bucket_id = 'product-images');
+
+CREATE POLICY "Public update product-images" ON storage.objects
+  FOR UPDATE USING (bucket_id = 'product-images');
+
+CREATE POLICY "Public delete product-images" ON storage.objects
+  FOR DELETE USING (bucket_id = 'product-images');
 
 -- ─── Seed Initial Categories ──────────────────────────────────────────────
 INSERT INTO categories (name, slug, description, display_order, is_active) VALUES
@@ -88,5 +106,5 @@ INSERT INTO categories (name, slug, description, display_order, is_active) VALUE
   ('Pickles & Preserves', 'pickles', 'Traditional homemade pickles, chutneys and preserves', 3, true),
   ('Snacks & Namkeen', 'snacks', 'Crispy homemade snacks and namkeen', 4, true),
   ('Cosmetics & Skincare', 'cosmetics', 'Natural handmade cosmetics and skincare products', 5, true),
-  ('Hair Accessories', 'hair-accessories', 'Beautiful handmade hair clutchers and accessories', 6, true)
+  ('Hair Clutchers', 'hair-clutchers', 'Beautiful handmade hair clutchers and accessories', 6, true)
 ON CONFLICT (slug) DO NOTHING;
