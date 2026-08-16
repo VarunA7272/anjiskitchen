@@ -1,10 +1,10 @@
 export const environment = {
   production: false,
   supabase: {
-    url: 'YOUR_SUPABASE_URL',
-    anonKey: 'YOUR_SUPABASE_ANON_KEY',
+    url: 'https://locdepagwmrkzxpgimgt.supabase.co',
+    anonKey: 'sb_publishable_FxKPiWkgHKf6w3dbNu0LIg_a47b6bEZ',
   },
   whatsapp: {
-    number: '917848827245', // without + prefix
+    number: '917848827245',
   },
 };
