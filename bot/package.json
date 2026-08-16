@@ -1,12 +1,13 @@
 {
   "name": "anjiskitchen-telegram-bot",
-  "version": "1.0.0",
-  "description": "Telegram Bot for Anji's Kitchen mobile product management",
+  "version": "1.1.0",
+  "description": "Telegram Bot for Anji's Kitchen mobile product management with AI Description Generation",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "@supabase/supabase-js": "^2.48.0",
     "dotenv": "^16.4.7",
     "node-telegram-bot-api": "^0.66.0"
