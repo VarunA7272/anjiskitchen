@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../core/services/seo.service';
+import { SiteSettingsService } from '../../core/services/site-settings.service';
 
 @Component({
   selector: 'app-about',
@@ -12,8 +13,8 @@ import { SeoService } from '../../core/services/seo.service';
       <section class="about-hero">
         <div class="about-hero-bg"></div>
         <div class="container">
-          <span class="eyebrow">Our Story</span>
-          <h1>About <span style="color:var(--rose)">Anji's Kitchen</span></h1>
+          <span class="eyebrow">{{ settings().about.eyebrow }}</span>
+          <h1>{{ settings().about.title }}</h1>
           <p class="about-hero-sub">A home business built on love, passion, and the finest handcrafted goods from Jabalpur</p>
         </div>
       </section>
@@ -24,16 +25,16 @@ import { SeoService } from '../../core/services/seo.service';
           <div class="story-grid">
             <div class="story-visual">
               <div class="story-logo-frame">
-                <img src="assets/logo.png" alt="Anji's Kitchen" />
+                <img [src]="settings().about.imageUrl || 'assets/logo.png'" alt="Anji's Kitchen" />
               </div>
               <div class="story-accent">🌸</div>
             </div>
             <div class="story-text">
-              <span class="eyebrow">How It Started</span>
-              <h2>From Kitchen to Community</h2>
-              <p>Anji's Kitchen was born from a deep love of cooking and a desire to share the warmth of homemade flavors with the community. What started as sharing food with friends and family soon grew into something beautiful.</p>
-              <p>Every product we make — from our signature baked goods and artisanal pickles to our handmade cosmetics and hair accessories — is crafted with the same care and attention to detail as if we were making it for our own family.</p>
-              <p>Based in Jabalpur, Madhya Pradesh, we believe in the power of homemade goodness. No preservatives, no compromises — just pure, authentic products made with the finest ingredients.</p>
+              <span class="eyebrow">{{ settings().about.eyebrow }}</span>
+              <h2>{{ settings().about.title }}</h2>
+              <p>{{ settings().about.paragraph1 }}</p>
+              <p>{{ settings().about.paragraph2 }}</p>
+              <p>{{ settings().about.paragraph3 }}</p>
             </div>
           </div>
         </div>
@@ -115,6 +116,10 @@ import { SeoService } from '../../core/services/seo.service';
 })
 export class AboutComponent implements OnInit {
   private seo = inject(SeoService);
+  private siteSettingsService = inject(SiteSettingsService);
+
+  settings = this.siteSettingsService.settings;
+
   ngOnInit() {
     this.seo.setPage({
       title: 'About Us',

@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { SupabaseService } from '../../core/services/supabase.service';
 import { SeoService } from '../../core/services/seo.service';
+import { SiteSettingsService } from '../../core/services/site-settings.service';
 import { Product } from '../../core/models/product.model';
 import { Category } from '../../core/models/category.model';
 import { Review } from '../../core/models/review.model';
@@ -24,51 +25,51 @@ import { Review } from '../../core/models/review.model';
 
       <div class="container hero-inner">
         <div class="hero-content animate-fade-up">
-          <span class="eyebrow">✨ Handcrafted in Jabalpur, MP</span>
+          <span class="eyebrow">{{ settings().hero.eyebrow }}</span>
           <h1 class="hero-title">
-            Welcome to<br />
-            <span class="brand-name">Anji's Kitchen</span><br />
-            <span class="brand-sub">n MORE</span>
+            {{ settings().hero.title }}
           </h1>
           <p class="hero-desc">
-            Homemade with love — from kitchen to your doorstep.<br />
-            Fresh baked goods, pickles, snacks, cosmetics & more.
+            {{ settings().hero.description }}
           </p>
           <div class="hero-actions">
             <a routerLink="/catalog" class="btn btn-primary btn-lg" id="hero-shop-btn">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9Z"/>
               </svg>
-              Shop Now
+              {{ settings().hero.primaryBtnText }}
             </a>
-            <a href="https://wa.me/917848827245" target="_blank" rel="noopener" class="btn btn-secondary btn-lg" id="hero-wa-btn">
+            <a [href]="waLink()" target="_blank" rel="noopener" class="btn btn-secondary btn-lg" id="hero-wa-btn">
               <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2Z"/></svg>
-              Chat with Us
+              {{ settings().hero.secondaryBtnText }}
             </a>
           </div>
 
           <!-- Stats -->
           <div class="hero-stats">
             <div class="stat">
-              <strong>100+</strong>
+              <strong>{{ settings().hero.statProducts }}</strong>
               <span>Products</span>
             </div>
             <div class="stat-divider"></div>
             <div class="stat">
-              <strong>500+</strong>
+              <strong>{{ settings().hero.statCustomers }}</strong>
               <span>Happy Customers</span>
             </div>
             <div class="stat-divider"></div>
             <div class="stat">
-              <strong>5★</strong>
+              <strong>{{ settings().hero.statRating }}</strong>
               <span>Avg Rating</span>
             </div>
           </div>
         </div>
 
-        <div class="hero-visual animate-fade-up delay-2">
-          <div class="hero-logo-wrap animate-float">
-            <img src="assets/logo.png" alt="Anji's Kitchen" class="hero-logo-img" />
+        <div class="hero-visual">
+          <div class="hero-image-frame glass-card">
+            <img [src]="settings().hero.imageUrl || 'assets/logo.png'" alt="Anji's Kitchen Logo" class="hero-logo" />
+            <div class="hero-badge floating">
+              <span>🌸 Handcrafted in Jabalpur</span>
+            </div>
           </div>
         </div>
       </div>
@@ -153,29 +154,22 @@ import { Review } from '../../core/models/review.model';
       <div class="container">
         <div class="about-card glass-card">
           <div class="about-text">
-            <span class="eyebrow">Our Story</span>
-            <h2>Made with Love,<br /> <span class="text-rose">Straight from Our Kitchen</span></h2>
-            <p>
-              Anji's Kitchen began as a passion for homemade food — the kind that brings
-              warmth, comfort, and nostalgia. Based in Jabalpur, Madhya Pradesh, we craft
-              every product by hand using traditional recipes and the finest local ingredients.
-            </p>
-            <p>
-              From our signature baked goods and homemade pickles to natural cosmetics and
-              hair accessories — everything we make carries the love of a home kitchen.
-            </p>
+            <span class="eyebrow">{{ settings().about.eyebrow }}</span>
+            <h2>{{ settings().about.title }}</h2>
+            <p>{{ settings().about.paragraph1 }}</p>
+            <p>{{ settings().about.paragraph2 }}</p>
             <a routerLink="/about" class="btn btn-primary" id="home-about-btn">
               Read Our Story
             </a>
           </div>
           <div class="about-visual">
             <div class="about-logo-frame">
-              <img src="assets/logo.png" alt="Anji's Kitchen Story" />
+              <img [src]="settings().about.imageUrl || 'assets/logo.png'" alt="Anji's Kitchen Story" />
             </div>
             <div class="about-badge">
               <span class="badge-icon">👩‍🍳</span>
-              <strong>Homemade</strong>
-              <span>with love</span>
+              <strong>{{ settings().about.badgeText }}</strong>
+              <span>{{ settings().about.badgeSub }}</span>
             </div>
           </div>
         </div>
@@ -187,12 +181,12 @@ import { Review } from '../../core/models/review.model';
       <div class="container">
         <div class="wa-inner">
           <div class="wa-text">
-            <h2>Ready to Order? Chat Directly on WhatsApp!</h2>
-            <p>Fast responses • Custom orders welcome • Free delivery within Jabalpur</p>
+            <h2>{{ settings().waBanner.title }}</h2>
+            <p>{{ settings().waBanner.subtext }}</p>
           </div>
-          <a href="https://wa.me/917848827245" target="_blank" rel="noopener" class="btn wa-cta-btn" id="wa-banner-btn">
+          <a [href]="waLink()" target="_blank" rel="noopener" class="btn wa-cta-btn" id="wa-banner-btn">
             <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2Zm.004 18a7.966 7.966 0 0 1-4.07-1.115l-.29-.173-3.004.895.895-3.004-.173-.29A7.967 7.967 0 0 1 4 12.004C4 7.584 7.584 4 12.004 4 16.42 4 20 7.584 20 12.004 20 16.42 16.42 20 12.004 20Zm4.37-5.972c-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.013-.373-1.928-1.188-.712-.635-1.193-1.42-1.333-1.66-.14-.24-.015-.37.105-.49.108-.107.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.195-.467-.393-.404-.54-.412l-.46-.008a.882.882 0 0 0-.64.3c-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.693 2.585 4.103 3.625.574.248 1.022.396 1.372.507.576.183 1.1.157 1.514.095.462-.069 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></svg>
-            Start WhatsApp Chat
+            {{ settings().waBanner.buttonText }}
           </a>
         </div>
       </div>
@@ -564,7 +558,10 @@ import { Review } from '../../core/models/review.model';
 export class HomeComponent implements OnInit {
   private supabase = inject(SupabaseService);
   private seo = inject(SeoService);
+  private siteSettingsService = inject(SiteSettingsService);
 
+  settings = this.siteSettingsService.settings;
+  waLink = this.siteSettingsService.waLink;
   featuredProducts = signal<Product[]>([]);
   categories = signal<Category[]>([]);
   reviews = signal<Review[]>([]);

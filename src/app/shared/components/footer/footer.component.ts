@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
   imports: [RouterLink],
   template: `
-    <footer class="footer">
+    @if (!isAdminPage()) {
+      <footer class="footer">
       <div class="footer-top">
         <div class="container">
           <div class="footer-grid">
@@ -84,6 +85,7 @@ import { RouterLink } from '@angular/router';
         </div>
       </div>
     </footer>
+    }
   `,
   styles: [`
     .footer { background: linear-gradient(180deg, #2C1A12 0%, #1a0e09 100%); color: rgba(255,255,255,0.8); margin-top: auto; }
@@ -114,5 +116,14 @@ import { RouterLink } from '@angular/router';
   `]
 })
 export class FooterComponent {
+  private router = inject(Router);
   year = new Date().getFullYear();
+  isAdminPage = signal(false);
+
+  constructor() {
+    this.router.events.subscribe(() => {
+      this.isAdminPage.set(this.router.url.startsWith('/admin'));
+    });
+    this.isAdminPage.set(this.router.url.startsWith('/admin'));
+  }
 }

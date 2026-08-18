@@ -1,5 +1,5 @@
 import { Component, computed, HostListener, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
 import { CartDrawerComponent } from '../cart-drawer/cart-drawer.component';
 
@@ -8,7 +8,8 @@ import { CartDrawerComponent } from '../cart-drawer/cart-drawer.component';
   standalone: true,
   imports: [RouterLink, RouterLinkActive, CartDrawerComponent],
   template: `
-    <nav class="navbar" [class.scrolled]="scrolled()">
+    @if (!isAdminPage()) {
+      <nav class="navbar" [class.scrolled]="scrolled()">
       <div class="navbar-inner">
         <!-- Logo -->
         <a routerLink="/" class="navbar-logo" aria-label="Anji's Kitchen Home">
@@ -71,6 +72,7 @@ import { CartDrawerComponent } from '../cart-drawer/cart-drawer.component';
 
     <!-- Cart Drawer -->
     <app-cart-drawer />
+    }
   `,
   styles: [`
     .navbar {
@@ -251,9 +253,19 @@ import { CartDrawerComponent } from '../cart-drawer/cart-drawer.component';
 })
 export class NavbarComponent {
   private cart = inject(CartService);
+  private router = inject(Router);
+
+  isAdminPage = signal(false);
   cartCount = computed(() => this.cart.totalItems());
   scrolled = signal(false);
   menuOpen = signal(false);
+
+  constructor() {
+    this.router.events.subscribe(() => {
+      this.isAdminPage.set(this.router.url.startsWith('/admin'));
+    });
+    this.isAdminPage.set(this.router.url.startsWith('/admin'));
+  }
 
   @HostListener('window:scroll')
   onScroll() {

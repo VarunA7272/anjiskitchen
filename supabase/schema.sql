@@ -55,6 +55,17 @@ CREATE INDEX IF NOT EXISTS idx_products_active ON products(is_active);
 CREATE INDEX IF NOT EXISTS idx_products_featured ON products(is_featured);
 CREATE INDEX IF NOT EXISTS idx_reviews_approved ON reviews(is_approved);
 
+-- ─── Site Settings / CMS Table ─────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS site_settings (
+  key TEXT PRIMARY KEY,
+  value JSONB NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Allow all site_settings" ON site_settings;
+CREATE POLICY "Allow all site_settings" ON site_settings FOR ALL USING (true) WITH CHECK (true);
+
 -- ─── Row Level Security (RLS) Policies ────────────────────────────────────
 -- Enable RLS
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;

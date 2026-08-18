@@ -378,6 +378,15 @@ h1, h2, h3, h4, h5, h6 {
   resize: vertical;
 }
 
+/* ─── Select Options Dropdown Fix ────────────────────────────────────────── */
+select option,
+.dark-input option,
+.form-select option {
+  background-color: #281620 !important;
+  color: #ffffff !important;
+  padding: 0.625rem 1rem;
+}
+
 /* ─── Stars ──────────────────────────────────────────────────────────────── */
 .stars {
   display: flex;

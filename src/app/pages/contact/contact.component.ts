@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { SeoService } from '../../core/services/seo.service';
+import { SiteSettingsService } from '../../core/services/site-settings.service';
 
 @Component({
   selector: 'app-contact',
@@ -20,32 +21,32 @@ import { SeoService } from '../../core/services/seo.service';
           <div class="contact-grid">
             <!-- Contact Cards -->
             <div class="contact-cards">
-              <a href="https://wa.me/917848827245" target="_blank" class="contact-card glass-card wa-card">
+              <a [href]="waLink()" target="_blank" class="contact-card glass-card wa-card">
                 <div class="contact-icon">💬</div>
                 <div class="contact-info">
                   <h3>WhatsApp</h3>
                   <p>Fastest way to reach us!</p>
-                  <span class="contact-value">+91 78488 27245</span>
+                  <span class="contact-value">{{ settings().contact.whatsappNumber }}</span>
                 </div>
                 <svg class="arrow-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
               </a>
 
-              <a href="tel:+917848827245" class="contact-card glass-card phone-card">
+              <a [href]="phoneLink()" class="contact-card glass-card phone-card">
                 <div class="contact-icon">📞</div>
                 <div class="contact-info">
                   <h3>Phone</h3>
                   <p>Call us directly</p>
-                  <span class="contact-value">+91 78488 27245</span>
+                  <span class="contact-value">{{ settings().contact.phone }}</span>
                 </div>
                 <svg class="arrow-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
               </a>
 
-              <a href="mailto:anjiskitchen@gmail.com" class="contact-card glass-card email-card">
+              <a [href]="'mailto:' + settings().contact.email" class="contact-card glass-card email-card">
                 <div class="contact-icon">📧</div>
                 <div class="contact-info">
                   <h3>Email</h3>
                   <p>For inquiries &amp; collaborations</p>
-                  <span class="contact-value">anjiskitchen&#64;gmail.com</span>
+                  <span class="contact-value">{{ settings().contact.email }}</span>
                 </div>
                 <svg class="arrow-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
               </a>
@@ -55,7 +56,7 @@ import { SeoService } from '../../core/services/seo.service';
                 <div class="contact-info">
                   <h3>Location</h3>
                   <p>Home delivery available in</p>
-                  <span class="contact-value">Jabalpur, Madhya Pradesh</span>
+                  <span class="contact-value">{{ settings().contact.location }}</span>
                 </div>
               </div>
 
@@ -63,9 +64,9 @@ import { SeoService } from '../../core/services/seo.service';
               <div class="hours-card glass-card">
                 <h3>🕐 Business Hours</h3>
                 <div class="hours-list">
-                  <div class="hour-row"><span>Mon – Sat</span><span class="hour-val">9:00 AM – 8:00 PM</span></div>
-                  <div class="hour-row"><span>Sunday</span><span class="hour-val">10:00 AM – 6:00 PM</span></div>
-                  <div class="hour-row"><span>WhatsApp</span><span class="hour-val open-badge">Always Open</span></div>
+                  <div class="hour-row"><span>Mon – Sat</span><span class="hour-val">{{ settings().contact.hoursMonSat }}</span></div>
+                  <div class="hour-row"><span>Sunday</span><span class="hour-val">{{ settings().contact.hoursSun }}</span></div>
+                  <div class="hour-row"><span>WhatsApp</span><span class="hour-val open-badge">{{ settings().contact.hoursWa }}</span></div>
                 </div>
               </div>
             </div>
@@ -73,17 +74,17 @@ import { SeoService } from '../../core/services/seo.service';
             <!-- WhatsApp CTA -->
             <div class="wa-cta-panel glass-card">
               <div class="wa-icon-big">💚</div>
-              <h2>Easiest Way to Order</h2>
-              <p>Browse our products, add them to cart, and send your order via WhatsApp in one click. Or just message us directly with what you want!</p>
+              <h2>{{ settings().waBanner.title }}</h2>
+              <p>{{ settings().waBanner.subtext }}</p>
               <div class="wa-cta-steps">
                 <div class="wa-step"><span class="step-num">1</span><span>Browse our catalog</span></div>
                 <div class="wa-step"><span class="step-num">2</span><span>Add items to cart</span></div>
                 <div class="wa-step"><span class="step-num">3</span><span>Click "Order via WhatsApp"</span></div>
                 <div class="wa-step"><span class="step-num">4</span><span>Confirm &amp; we deliver! 🎉</span></div>
               </div>
-              <a href="https://wa.me/917848827245" target="_blank" class="btn wa-big-btn">
+              <a [href]="waLink()" target="_blank" class="btn wa-big-btn">
                 <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2Z"/></svg>
-                Open WhatsApp Chat
+                {{ settings().waBanner.buttonText }}
               </a>
             </div>
           </div>
@@ -126,6 +127,12 @@ import { SeoService } from '../../core/services/seo.service';
 })
 export class ContactComponent implements OnInit {
   private seo = inject(SeoService);
+  private siteSettingsService = inject(SiteSettingsService);
+
+  settings = this.siteSettingsService.settings;
+  waLink = this.siteSettingsService.waLink;
+  phoneLink = this.siteSettingsService.phoneLink;
+
   ngOnInit() {
     this.seo.setPage({
       title: 'Contact Us',

@@ -247,6 +247,28 @@ export class SupabaseService {
     } catch {}
   }
 
+  // ─── Site Settings / CMS ──────────────────────────────────────────────────
+  async getSiteSettings(): Promise<any | null> {
+    if (!this.isMockMode && this.supabase) {
+      try {
+        const { data, error } = await this.supabase.from('site_settings').select('*').eq('key', 'main_config').single();
+        if (!error && data) return data.value;
+      } catch {}
+    }
+    const stored = localStorage.getItem('anjis_site_settings');
+    return stored ? JSON.parse(stored) : null;
+  }
+
+  async updateSiteSettings(settings: any): Promise<void> {
+    if (!this.isMockMode && this.supabase) {
+      try {
+        await this.supabase.from('site_settings').upsert({ key: 'main_config', value: settings, updated_at: new Date().toISOString() });
+        return;
+      } catch {}
+    }
+    localStorage.setItem('anjis_site_settings', JSON.stringify(settings));
+  }
+
   // ─── Auth ──────────────────────────────────────────────────────────────────
   async signIn(email: string, _password: string): Promise<AuthResponse> {
     if (!this.isMockMode && this.supabase) {
