@@ -271,49 +271,38 @@ export class SupabaseService {
 
   // ─── Auth ──────────────────────────────────────────────────────────────────
   async signIn(email: string, _password: string): Promise<AuthResponse> {
-    if (!this.isMockMode && this.supabase) {
-      try {
-        const res = await this.supabase.auth.signInWithPassword({ email, password: _password });
-        if (!res.error) return res;
-      } catch {}
+    if (!this.supabase) {
+      return {
+        data: { user: null, session: null },
+        error: { message: 'Supabase URL & Anon Key not configured in environment.ts' } as any
+      };
     }
 
-    // Mock Login Success
-    const mockSession = {
-      access_token: 'mock-token',
-      token_type: 'bearer',
-      expires_in: 3600,
-      refresh_token: 'mock-refresh',
-      user: { id: 'mock-user-1', email, role: 'authenticated', app_metadata: {}, user_metadata: {}, aud: 'authenticated', created_at: '' }
-    } as Session;
-
-    localStorage.setItem('anjis_mock_session', JSON.stringify(mockSession));
-    return { data: { user: mockSession.user, session: mockSession }, error: null };
+    // Strictly authenticate via real Supabase Auth service
+    return await this.supabase.auth.signInWithPassword({ email, password: _password });
   }
 
   async signOut(): Promise<void> {
-    if (!this.isMockMode && this.supabase) {
+    if (this.supabase) {
       await this.supabase.auth.signOut();
     }
-    localStorage.removeItem('anjis_mock_session');
   }
 
   async getSession(): Promise<Session | null> {
-    if (!this.isMockMode && this.supabase) {
+    if (this.supabase) {
       try {
         const { data } = await this.supabase.auth.getSession();
         if (data.session) return data.session;
       } catch {}
     }
-    const stored = localStorage.getItem('anjis_mock_session');
-    return stored ? JSON.parse(stored) : null;
+    return null;
   }
 
   onAuthStateChange(callback: (session: Session | null) => void) {
-    if (!this.isMockMode && this.supabase) {
+    if (this.supabase) {
       return this.supabase.auth.onAuthStateChange((_event, session) => callback(session));
     }
-    callback(this.getSession() as any);
+    callback(null);
     return { subscription: { unsubscribe: () => {} } };
   }
 
